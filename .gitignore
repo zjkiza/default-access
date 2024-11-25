@@ -1,0 +1,8 @@
+.php-cs-fixer.cache
+.phpunit.result.cache
+
+/.idea
+/var
+/build
+/vendor
+.env

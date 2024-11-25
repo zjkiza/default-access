@@ -1,0 +1,13 @@
+parameters:
+    paths:
+        - src
+        - tests
+    excludePaths:
+        - tests/Resources/*
+    level: max
+    bootstrapFiles:
+        - phpstan.bootstrap.php
+includes:
+    - vendor/phpstan/phpstan-phpunit/extension.neon
+    - vendor/phpstan/phpstan-phpunit/rules.neon
+    - vendor/ekino/phpstan-banned-code/extension.neon
