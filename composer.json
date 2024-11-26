@@ -1,7 +1,7 @@
 {
     "name": "zjkiza/default-access",
-    "description": "To easily access and invoke private and protected properties and methods in PHP.",
-    "type": "php-utils",
+    "description": "To easily access and invoke private and protected properties and methods as with static.",
+    "type": "php-package",
     "license": "MIT",
     "authors": [
         {
