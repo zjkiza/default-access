@@ -2,34 +2,12 @@ FROM php:8.3-cli
 
 RUN apt-get update --fix-missing
 RUN apt-get update && apt-get install -y \
-    curl \
-    gettext \
     git \
-    openssl \
-    openssh-client \
     zip \
-    net-tools \
     nano \
-    build-essential \
-    libssl-dev \
-    zlib1g-dev \
-    libpng-dev \
-    libpq-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    libzip-dev \
-    postgresql-client \
-    libxml2-dev \
-    libicu-dev \
-    libxslt-dev \
-    xsltproc
-
-RUN docker-php-ext-configure intl
-RUN docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
-
-RUN docker-php-ext-install bcmath exif gd gettext pdo pdo_mysql mysqli zip opcache soap simplexml pcntl intl xsl
-
-RUN pecl install apcu && docker-php-ext-enable apcu
+    gettext \
+    openssl \
+    openssh-client
 
 RUN pecl install xdebug
 

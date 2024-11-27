@@ -134,4 +134,37 @@ final class ChildrenClassTest extends TestCase
         $this->assertSame($value, $this->defaultAccessor->callGetter($foo, 'getStaticProtectedFuncFoo'));
         $this->assertSame($value, $foo->staticProtectedPropertyFooValue());
     }
+
+    public function testGetMultipleArguments(): void
+    {
+        $foo = new Foo();
+
+        $value = $this->defaultAccessor->callMethod($foo, 'getMultipleArguments', ['Foo', 11]);
+
+        $this->assertSame('Foo11', $value);
+    }
+    public function testSetMultipleArgumentsAndCallGetFunction(): void
+    {
+        $foo = new Foo();
+
+        $this->defaultAccessor->callMethod($foo, 'setMultipleArguments', ['Foo', 11]);
+
+        $value = $this->defaultAccessor->callMethod($foo, 'getProtectedFuncFoo');
+
+        $this->assertSame('Foo11', $value);
+    }
+
+    public function testSetMultipleArgumentsAndCallGetFunctionWithNamedArguments(): void
+    {
+        $foo = new Foo();
+
+        $this->defaultAccessor->callMethod($foo, 'setMultipleArguments', [
+            'number' => 11,
+            'name' => 'Foo',
+        ]);
+
+        $value = $this->defaultAccessor->callMethod($foo, 'getProtectedFuncFoo');
+
+        $this->assertSame('Foo11', $value);
+    }
 }

@@ -13,8 +13,8 @@ use Zjk\Accessor\Property\StrategyPropertyAccess;
 final class DefaultAccessor implements DefaultAccessInterface
 {
     public function __construct(
-        private readonly MethodAccessInterface $methodAccess,
-        private readonly StrategyPropertyAccessInterface $propertyAccess
+        private MethodAccessInterface $methodAccess,
+        private StrategyPropertyAccessInterface $propertyAccess
     ) {
     }
 

@@ -102,4 +102,13 @@ final class Foo extends Bar
     {
         self::$staticProtectedPropertyFoo = $name;
     }
+    protected function getMultipleArguments(string $name, int $number): string
+    {
+        return $name.$number;
+    }
+
+    protected function setMultipleArguments(string $name, int $number): void
+    {
+        $this->protectedPropertyFoo = $name.$number;
+    }
 }

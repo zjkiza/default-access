@@ -1,10 +1,10 @@
 # PHP Package: Default Accessor
 
-A package for easily accessing and invoking private and protected properties and methods, as well as static ones, in PHP.
+A package for easily accessing and invoking private and protected properties and methods, as well as static ones. It also supports access to the methods and properties of the parent class.
 
 # About the Package
 
-This package provides a practical way to access and manage private and protected methods and properties in PHP objects through the `Zjk\Accessor\Contract\DefaultAccessInterface`. The following methods are available:
+This package provides a practical way to access and manage private and protected methods and properties in PHP objects through the `Zjk\Accessor\Contract\DefaultAccessInterface`.
 
 # Methods for Managing Properties and Methods
 
@@ -15,7 +15,7 @@ This package provides a practical way to access and manage private and protected
   - Invokes a getter method on an object to retrieve a value.
   
 - `callMethod(object $object, string $method, array $arguments = []): mixed`
-  - Allows the invocation of any private or protected method, including those with multiple arguments.
+  - Allows the invocation of any private or protected method, including those with multiple arguments. It also supports the naming of the argument.
   - Useful for: Methods that require complex parameters or perform combined operations like setting and retrieving values.
 
 - `setValue(object $object, string $property, mixed $value): void`
@@ -40,13 +40,16 @@ If you're using the Composer autoloader, all necessary files will be automatical
 
 If you're working in a plain PHP project without a framework, you can directly use the `DefaultAccessor::create()` class. This class implements the DefaultAccessInterface and provides access to all its methods.
 
-    ```php
+```php
+    use Zjk\Accessor\DefaultAccessor;
     
-        $accessor = \Zjk\Accessor\DefaultAccessor::create();
-        $accessor->setValue($myObject, 'propertyName', 'newValue');
-        $value = $accessor->getValue($myObject, 'propertyName');
+    $accessor = DefaultAccessor::create();
     
-    ```
+    $object = new SomeClass();
+    $accessor->setValue($object, 'propertyName', 'value');
+    $value = $accessor->getValue($object, 'propertyName');
+
+```
 
 ## Usage with a Framework
 
@@ -54,10 +57,10 @@ If you're using a PHP framework, you can integrate this package through dependen
 
 1. Register the Interface and Implementation:
    - Configure the `Zjk\Accessor\Contract\DefaultAccessInterface` interface to instantiate the `Zjk\Accessor\DefaultAccessor` class.
-   - This allows the DefaultAccessInterface to be injected into any class within the framework.
+   - This allows the `DefaultAccessInterface` to be injected into any class within the framework.
 
 2. Direct Usage:
-   - Alternatively, you can use the static DefaultAccessor::create() method for instantiation without additional configuration.
+   - Alternatively, you can use the static `DefaultAccessor::create()` method for instantiation without additional configuration.
 
 ### Example in Symfony
 
@@ -113,7 +116,7 @@ If you're using a PHP framework, you can integrate this package through dependen
     
         public function modifyObject()
         {
-            $object = new \Some\ProtectedClass();
+            $object = new SomeClass();
     
             // Set a private property
             $this->accessor->setValue($object, 'privateProperty', 'newValue');
@@ -124,9 +127,7 @@ If you're using a PHP framework, you can integrate this package through dependen
             return response()->json(['value' => $value]);
         }
     }
-    
     ```
-
 # Package Benefits
 
 - **Flexibility**: Enables interaction with objects that have private or protected attributes/methods without modifying their visibility.
@@ -138,9 +139,6 @@ This package is an excellent tool for advanced PHP developers who need a powerfu
 # Example :
 
 ```php
-
-final class Foo {
-
 class Bar
 {
     private ?string  $privateProperty;
@@ -200,14 +198,30 @@ class Bar
         self::$protectedStaticProperty = $name;
     }
     
+    protected function getWithMultipleArguments(string $name, int $number): string
+    {
+        return $name.$number;
+    }
+
+    protected function setWithMultipleArguments(string $name, int $number): void
+    {
+        $this->protectedPropertyFoo = $name.$number;
+    }
 }
 
 $bar = new Bar('property 1', 'property 2', 'property 3', 'property 4');
 
 DefaultAccessor::create()->callSetter($bar, 'setPrivate', 'Input bar');
 $protectedValue =  DefaultAccessor::create()->callGetter($bar, 'getProtected');
-DefaultAccessor::create()->callMethod(object $object, string $method, array $arguments = []);
+
 DefaultAccessor::create()->setValue($bar, 'protectedStaticPropertyBar', 'input static');
 $protectedStaticValue = DefaultAccessor::create()->getValue($bar, 'protectedStaticProperty');
 
+$this->defaultAccessor->callMethod($foo, 'setWithMultipleArguments', ['Foo', 11]);
+$this->defaultAccessor->callMethod($foo, 'setWithMultipleArguments', [
+    'number' => 11,
+    'name' => 'Foo',
+]);
+$value = $this->defaultAccessor->callMethod($foo, 'getMultipleArguments', ['Foo', 11]);
+$value = $this->defaultAccessor->callMethod($foo, 'getProtectedFuncFoo');
 ```

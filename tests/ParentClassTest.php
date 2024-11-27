@@ -137,5 +137,4 @@ final class ParentClassTest extends TestCase
         $this->assertSame($value, $this->defaultAccessor->callGetter($foo, 'getProtectedStaticFunBar'));
         $this->assertSame($value, $foo->getProtectedStaticPropertyBar());
     }
-
 }
