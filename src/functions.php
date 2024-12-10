@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Zjk\Accessor;
 
+use Zjk\Accessor\Exception\InvalidMethodException;
+use Zjk\Accessor\Exception\InvalidPropertyException;
+
 /**
  * @return class-string
  */
@@ -19,7 +22,7 @@ function findClassWithProperty(object $object, string $property): string
         $class = \get_parent_class($class);
     }
 
-    throw new \InvalidArgumentException(\sprintf('Property "%s" does not exist in class "%s".', $property, $object::class));
+    throw new InvalidPropertyException(\sprintf('Property "%s" does not exist in class "%s".', $property, $object::class));
 }
 
 /**
@@ -37,5 +40,5 @@ function findClassWithMethod(object $object, string $method): string
         $class = \get_parent_class($class);
     }
 
-    throw new \InvalidArgumentException(\sprintf('Method "%s" does not exist in class "%s".', $method, $object::class));
+    throw new InvalidMethodException(\sprintf('Method "%s" does not exist in class "%s".', $method, $object::class));
 }

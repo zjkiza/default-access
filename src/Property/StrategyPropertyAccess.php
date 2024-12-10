@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Zjk\Accessor\Property;
 
 use ReflectionProperty;
-use RuntimeException;
 use Zjk\Accessor\Contract\PropertyAccessInterface;
 use Zjk\Accessor\Contract\StrategyPropertyAccessInterface;
+use Zjk\Accessor\Exception\NotExistStrategy;
 use Zjk\Accessor\Property\Strategy\PropertyAccess;
 use Zjk\Accessor\Property\Strategy\StaticPropertyAccess;
 
@@ -44,7 +44,7 @@ final class StrategyPropertyAccess implements StrategyPropertyAccessInterface
             }
         }
 
-        throw new RuntimeException(\sprintf('No strategy was found to access property "%s" in class "%s"', $property, $object::class));
+        throw new NotExistStrategy(\sprintf('No strategy was found to access property "%s" in class "%s"', $property, $object::class));
     }
 
     public function getValue(object $object, string $property): mixed
@@ -58,6 +58,6 @@ final class StrategyPropertyAccess implements StrategyPropertyAccessInterface
             }
         }
 
-        throw new RuntimeException(\sprintf('No strategy was found to access property "%s" in class "%s"', $property, $object::class));
+        throw new NotExistStrategy(\sprintf('No strategy was found to access property "%s" in class "%s"', $property, $object::class));
     }
 }

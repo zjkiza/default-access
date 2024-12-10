@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Zjk\Accessor\Tests;
+namespace Zjk\Accessor\Tests\Functionality;
 
 use PHPUnit\Framework\TestCase;
 use Zjk\Accessor\Contract\DefaultAccessInterface;
 use Zjk\Accessor\DefaultAccessor;
-use Zjk\Accessor\Tests\Resources\Bar;
 use Zjk\Accessor\Tests\Resources\Foo;
 
 /**

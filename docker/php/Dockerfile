@@ -11,6 +11,8 @@ RUN apt-get update && apt-get install -y \
 
 RUN pecl install xdebug
 
+RUN docker-php-ext-install pcntl
+
 #   Setup Composer
 
 WORKDIR /tmp

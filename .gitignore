@@ -6,3 +6,5 @@
 /build
 /vendor
 .env
+/bin/__pycache__/
+/bin/utility/__pycache__/

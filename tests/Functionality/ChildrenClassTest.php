@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Zjk\Accessor\Tests;
+namespace Zjk\Accessor\Tests\Functionality;
 
 use PHPUnit\Framework\TestCase;
 use Zjk\Accessor\Contract\DefaultAccessInterface;
