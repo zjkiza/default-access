@@ -1,23 +1,29 @@
 #!/usr/bin/env python3
 
+import os
 import time
 from rich.console import Console
 from rich.markdown import Markdown
 import subprocess
 import click
-from utility.utility import run_container
-from utility.utility import process_test_result
-from utility.utility import down_container
-from config import container_php, container_db, waiting_db_connection, containers, docker_compose_files_list, commands, container_work_dir
+from utility.docker_manager_factory import create_docker_manager
+from config import container_php, waiting_db_connection, commands, container_work_dir, phpunit_code_error_bypass
 
 
 @click.command()
 @click.option('--verbose/--no-verbose', default=False,
               help='Default is not verbose. Do you want verbose output of each check.', type=bool)
-def run(verbose):
+def run(verbose: bool) -> None:
     start = time.time()
 
-    run_container(verbose, waiting_db_connection, docker_compose_files_list, containers, container_db)
+    Console().print('[blue]PHP version: {}[/blue]'.format(os.environ.get('PHP_VERSION', 'default (8.4)')), width=120)
+
+    docker_manager = create_docker_manager(
+        verbose=verbose,
+        waiting_db=waiting_db_connection,
+        unit_code_error_bypass=phpunit_code_error_bypass
+    )
+    docker_manager.run_container()
 
     result_of_tests = 0
 
@@ -25,14 +31,14 @@ def run(verbose):
         Console().print('[blue]Running `{}`...[/blue]'.format(command_name), width=120)
 
         output_process = subprocess.run(
-            'docker exec -w {} -it {} sh -c "{}"'.format(container_work_dir, container_php, command),
+            'docker exec -w {} {} sh -c "{}"'.format(container_work_dir, container_php, command),
             shell=True,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True
         )
 
-        result_of_tests = process_test_result(output_process, command_name, verbose, result_of_tests)
+        result_of_tests = docker_manager.process_test_result(output_process, command_name, result_of_tests)
 
     total_time = round(time.time() - start)
 
@@ -48,7 +54,7 @@ def run(verbose):
                     width=120, style="green")
     Console().print(Markdown('***'), width=120)
 
-    down_container(verbose, docker_compose_files_list)
+    docker_manager.down_container()
 
     Console().print(Markdown('***'), width=120)
     Console().print(Markdown('### End continuous integration.'), width=120, style="green")

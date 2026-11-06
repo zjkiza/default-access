@@ -12,17 +12,21 @@ use Zjk\Accessor\Contract\PropertyAccessInterface;
  */
 final class StaticPropertyAccess implements PropertyAccessInterface
 {
+    #[\Override]
     public function canAccess(\ReflectionProperty $reflectionProperty): bool
     {
         return $reflectionProperty->isStatic();
     }
 
+    #[\Override]
     public function setValue(object $object, string $class, string $property, mixed $value): void
     {
         Closure::bind(static function (mixed $value) use ($property): void {
             self::${$property} = $value;
         }, null, $class)($value);
     }
+
+    #[\Override]
 
     public function getValue(object $object, string $class, string $property): mixed
     {

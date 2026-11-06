@@ -14,6 +14,7 @@ use function Zjk\Accessor\findClassWithMethod;
  */
 final class MethodAccess implements MethodAccessInterface
 {
+    #[\Override]
     public function callSetter(object $object, string $method, mixed $value): void
     {
         $scope = findClassWithMethod($object, $method);
@@ -25,6 +26,7 @@ final class MethodAccess implements MethodAccessInterface
         }, $object, $scope)($value);
     }
 
+    #[\Override]
     public function callGetter(object $object, string $method): mixed
     {
         $scope = findClassWithMethod($object, $method);
@@ -35,6 +37,7 @@ final class MethodAccess implements MethodAccessInterface
     /**
      * @param mixed[] $arguments
      */
+    #[\Override]
     public function callMethod(object $object, string $method, array $arguments = []): mixed
     {
         $scope = findClassWithMethod($object, $method);

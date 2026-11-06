@@ -32,6 +32,7 @@ final class StrategyPropertyAccess implements StrategyPropertyAccessInterface
         return $this;
     }
 
+    #[\Override]
     public function setValue(object $object, string $property, mixed $value): void
     {
         $class = findClassWithProperty($object, $property);
@@ -47,6 +48,7 @@ final class StrategyPropertyAccess implements StrategyPropertyAccessInterface
         throw new NotExistStrategy(\sprintf('No strategy was found to access property "%s" in class "%s"', $property, $object::class));
     }
 
+    #[\Override]
     public function getValue(object $object, string $property): mixed
     {
         $class = findClassWithProperty($object, $property);

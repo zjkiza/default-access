@@ -16,6 +16,8 @@ final class ParentClassTest extends TestCase
 {
     protected DefaultAccessInterface $defaultAccessor;
 
+    #[\Override]
+
     protected function setUp(): void
     {
         parent::setUp();

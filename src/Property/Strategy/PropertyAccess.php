@@ -16,11 +16,13 @@ use function Zjk\Accessor\findClassWithProperty;
  */
 final class PropertyAccess implements PropertyAccessInterface
 {
+    #[\Override]
     public function canAccess(ReflectionProperty $reflectionProperty): bool
     {
         return !$reflectionProperty->isStatic();
     }
 
+    #[\Override]
     public function setValue(object $object, string $class, string $property, mixed $value): void
     {
         Closure::bind(function (mixed $value) use ($property): object {
@@ -30,6 +32,7 @@ final class PropertyAccess implements PropertyAccessInterface
         }, $object, $class)($value);
     }
 
+    #[\Override]
     public function getValue(object $object, string $class, string $property): mixed
     {
         return Closure::bind(fn (): mixed => $this->{$property}, $object, $class)();
