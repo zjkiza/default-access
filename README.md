@@ -1,5 +1,13 @@
 # PHP Package: Default Accessor
 
+[![CI](https://github.com/zjkiza/default-access/actions/workflows/ci.yml/badge.svg)](https://github.com/zjkiza/default-access/actions/workflows/ci.yml)
+[![Latest version](https://img.shields.io/packagist/v/zjkiza/default-access)](https://packagist.org/packages/zjkiza/default-access)
+[![PHP version](https://img.shields.io/packagist/dependency-v/zjkiza/default-access/php)](https://packagist.org/packages/zjkiza/default-access)
+[![Downloads](https://img.shields.io/packagist/dt/zjkiza/default-access)](https://packagist.org/packages/zjkiza/default-access/stats)
+[![License](https://img.shields.io/packagist/l/zjkiza/default-access)](LICENSE)
+[![PHPStan level max](https://img.shields.io/badge/PHPStan-level%20max-brightgreen)](phpstan.neon.dist)
+[![Psalm level 2](https://img.shields.io/badge/Psalm-level%202-brightgreen)](psalm.xml)
+
 A package for easily accessing and invoking private and protected properties and methods, as well as static ones. It also supports access to the methods and properties of the parent class.
 
 # About the Package
